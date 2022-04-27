@@ -1,70 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>My Page</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <script>
 
-            /**
-             * This function randomly returns "rock", "paper", or "scissors" 
-            * No parameters
-            */
-            function computerPlay()
-            {
-                let randomNum = Math.floor(Math.random() * 3);
+<head>
+    <title>Rock Paper Scissors</title>
+    <meta charset="utf-8">
+</head>
 
-                if (randomNum === 0)
-                {
-                    return "Rock";
-                }
-                else if (randomNum === 1)
-                {
-                    return "Paper";
-                }
-                else
-                {
-                    return "Scissors";
-                }
+<body>
+    <script>
 
+        /**
+         * This function randomly returns "rock", "paper", or "scissors" 
+        * No parameters
+        */
+        function computerPlay() {
+            let randomNum = Math.floor(Math.random() * 3);
+
+            if (randomNum === 0) {
+                return "Rock";
+            }
+            else if (randomNum === 1) {
+                return "Paper";
+            }
+            else {
+                return "Scissors";
             }
 
-            function playRound(playerSelection, computerSelection)
-            {
-                playerSelection = playerSelection.toUpperCase();
-                computerSelection = computerSelection.toUpperCase();
+        }
 
-                if (playerSelection === "ROCK" && computerSelection === "SCISSORS")
-                {
-                    return "Player Wins! Rock beats Scissors";}
-                
-                if (playerSelection === "ROCK" && computerSelection === "PAPER")
-                {return "Computer Wins! Paper beats Rock";}
-                
-                if (playerSelection === "PAPER" && computerSelection === "SCISSORS")
-                {return "Computer Wins! Scissors beat Paper";}
-                
-                if (playerSelection === "PAPER" && computerSelection === "ROCK")
-                {return "Player Wins! Paper beats Rock";}
-                
-                if (playerSelection === "SCISSORS" && computerSelection === "ROCK")
-                {return "Computer Wins! Rock beats Scissors";}
-                
-                if (playerSelection === "SCISSORS" && computerSelection === "PAPER")
-                {return "Computer Wins! Scissors beat Paper ";}
+        function playRound(playerSelection, computerSelection) {
+            playerSelection = playerSelection.toUpperCase();
+            computerSelection = computerSelection.toUpperCase();
 
-                else{
-                    return "A tie! The same element can't beat itself. Try Again."
-                }
-
+            if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+                return "2";
             }
 
-            const playerSelection = "rock";
-            const computerSelection = computerPlay();
+            if (playerSelection === "ROCK" && computerSelection === "PAPER") { return "1"; }
 
-            console.log(computerSelection);
-            console.log(playRound(playerSelection, computerSelection));
-        </script>
-    </body>
+            if (playerSelection === "PAPER" && computerSelection === "SCISSORS") { return "1"; }
+
+            if (playerSelection === "PAPER" && computerSelection === "ROCK") { return "2"; }
+
+            if (playerSelection === "SCISSORS" && computerSelection === "ROCK") { return "1"; }
+
+            if (playerSelection === "SCISSORS" && computerSelection === "PAPER") { return "2"; }
+
+            else {
+                return "0";
+            }
+
+        }
+
+
+
+
+        function game() {
+            let computerWins = 0;
+            let playerWins = 0;
+
+            for (let i = 0; i < 5; i++) 
+            {
+                const playerSelection = prompt("Paper, Rock, or Scissors: ");
+                const computerSelection = computerPlay();
+
+                let winner = parseInt(playRound(playerSelection, computerSelection));
+
+                if (winner === 1)
+                {
+                    computerWins++;
+                    console.log("Computer wins -- " + computerSelection + " beats " + playerSelection);
+                }
+                if (winner === 2)
+                {
+                    playerWins++;
+                    console.log("Player wins -- " + playerSelection + " beats " + computerSelection);
+                }
+            }
+            
+            if (playerWins > computerWins)
+            {
+                return "Player wins " + playerWins + "-" + computerWins;
+            }
+            else if (playerWins <  computerWins)
+            {
+                return "Computer wins " + computerWins + "-" + playerWins;
+            }
+            else{
+                return "A tie " + computerWins + "-" + playerWins;
+            }
+        }
+    </script>
+</body>
+
 </html>
