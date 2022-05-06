@@ -9,7 +9,7 @@
 <body>
 
     <script>
-        
+
         const start = document.createElement("button");
         start.textContent = "START GAME";
 
@@ -22,100 +22,88 @@
         const scissors = document.createElement("button");
         scissors.textContent = "SCISSORS";
 
+        const results = document.createElement("div");
+
         start.addEventListener('click', game);
-        
-        rock.addEventListener("click", playRound("ROCK", prompt("Paper, Rock, or Scissors: ")));
-        paper.addEventListener("click", playRound("PAPER", prompt("Paper, Rock, or Scissors: ")));
-        scissors.addEventListener("click", playRound("SCISSORS", prompt("Paper, Rock, or Scissors: ")));
-
-        function game() {
-            let computerWins = 0;
-            let playerWins = 0;
-
-            for (let i = 0; i < 5; i++) 
-            {
-                const playerSelection = prompt("Paper, Rock, or Scissors: ");
-                const computerSelection = computerPlay();
-
-                let winner = parseInt(playRound(playerSelection, computerSelection));
-
-                if (winner === 1)
-                {
-                    computerWins++;
-                    console.log("Computer wins -- " + computerSelection + " beats " + playerSelection);
-                }
-                if (winner === 2)
-                {
-                    playerWins++;
-                    console.log("Player wins -- " + playerSelection + " beats " + computerSelection);
-                }
-            }
-            
-            if (playerWins > computerWins)
-            {
-                return "Player wins " + playerWins + "-" + computerWins;
-            }
-            else if (playerWins <  computerWins)
-            {
-                return "Computer wins " + computerWins + "-" + playerWins;
-            }
-            else{
-                return "A tie " + computerWins + "-" + playerWins;
-            }
-        }
+        rock.addEventListener("click", playRound("ROCK", computerPlay));
+        paper.addEventListener("click", playRound("PAPER", computerPlay));
+        scissors.addEventListener("click", playRound("SCISSORS", computerPlay));
 
         function computerPlay() {
             let randomNum = Math.floor(Math.random() * 3);
 
             if (randomNum === 0) {
-                return "Rock";
+                return "ROCK";
             }
             else if (randomNum === 1) {
-                return "Paper";
+                return "PAPER";
             }
             else {
-                return "Scissors";
+                return "SCISSORS";
             }
 
         }
 
         function playRound(playerSelection, computerSelection) {
-            playerSelection = playerSelection.toUpperCase();
-            computerSelection = computerSelection.toUpperCase();
+            let game = 1;
+
+            let computerWins = 0;
+            let playerWins = 0;
+
+
+            if (playerSelection === "SCISSORS" && computerSelection === "ROCK") {
+                game++;
+                computerWins++;
+                results.textContent += "Computer wins -- " + computerSelection + " beats " + playerSelection;
+            }
+            if (playerSelection === "ROCK" && computerSelection === "PAPER") {
+                game++;
+                computerWins++;
+                results.textContent += "Computer wins -- " + computerSelection + " beats " + playerSelection;
+            }
+
+            if (playerSelection === "PAPER" && computerSelection === "SCISSORS") {
+                game++;
+                computerWins++;
+                results.textContent += "Computer wins -- " + computerSelection + " beats " + playerSelection;
+            }
+
+            if (playerSelection === "PAPER" && computerSelection === "ROCK") {
+                game++;
+                playerWins++;
+                results.textContent += "Player wins -- " + playerSelection + " beats " + computerSelection;
+            }
 
             if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
-                return "2";
+                game++;
+                playerWins++;
+                results.textContent += "Player wins -- " + playerSelection + " beats " + computerSelection;
             }
 
-            if (playerSelection === "ROCK" && computerSelection === "PAPER") { return "1"; }
-
-            if (playerSelection === "PAPER" && computerSelection === "SCISSORS") { return "1"; }
-
-            if (playerSelection === "PAPER" && computerSelection === "ROCK") { return "2"; }
-
-            if (playerSelection === "SCISSORS" && computerSelection === "ROCK") { return "1"; }
-
-            if (playerSelection === "SCISSORS" && computerSelection === "PAPER") { return "2"; }
+            if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+                game++;
+                playerWins++;
+                results.textContent += "Player wins -- " + playerSelection + " beats " + computerSelection;
+            }
 
             else {
-                return "0";
+                game++;
+                results.textContent += "A tie ";
             }
 
+            if (playerWins > computerWins) {
+                results.textContent += "Player wins " + playerWins + "-" + computerWins;
+            }
+            else if (playerWins < computerWins) {
+                results.textContent += "Computer wins " + computerWins + "-" + playerWins;
+            }
+            else {
+                results.textContent += "A tie " + computerWins + "-" + playerWins;
+            }
         }
 
-        let i = 0;
-        while(i < 3)
-        {
-            alert(`number ${i}!` );
-            i++;
-        }
-
-
-
-
-
-        
-    </script> 
+    </script>
+    
 </body>
 
 </html>
