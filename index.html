@@ -7,27 +7,49 @@
 </head>
 
 <body>
-
+    <h1> Let's Play</h1>
     <script>
+        let game = 1;
+        let computerWins = 0;
+        let playerWins = 0;
 
-        const start = document.createElement("button");
-        start.textContent = "START GAME";
+        const body = document.querySelector("body");
+        body.setAttribute(
+            'style',
+            'background-color:#7fffd4; display: flex; flex-direction: column; align-items: center;'
+        );
 
         const rock = document.createElement("button");
         rock.textContent = "ROCK";
+        rock.setAttribute(
+            'style',
+            'border-radius: 10px; font-size: 22px; border: solid black 5px; background-color: white; color; black; width: 150px; height: 50px; padding: 5px; margin: 10px;'
+            );
 
         const paper = document.createElement("button");
         paper.textContent = "PAPER";
+        paper.setAttribute(
+            'style',
+            'border-radius: 10px; font-size: 22px; border: solid black 5px; background-color: white; color; black; width: 150px; height: 50px; padding: 5px; margin: 10px;'
+            );
 
         const scissors = document.createElement("button");
         scissors.textContent = "SCISSORS";
+        scissors.setAttribute(
+            'style',
+            'border-radius: 10px; font-size: 22px; border: solid black 5px; background-color: white; color; black; width: 150px; height: 50px; padding: 5px; margin: 10px;'
+            );
 
         const results = document.createElement("div");
 
-        start.addEventListener('click', game);
-        rock.addEventListener("click", playRound("ROCK", computerPlay));
-        paper.addEventListener("click", playRound("PAPER", computerPlay));
-        scissors.addEventListener("click", playRound("SCISSORS", computerPlay));
+        document.body.appendChild(rock);
+        document.body.appendChild(paper);
+        document.body.appendChild(scissors);
+        document.body.appendChild(results);
+
+        rock.addEventListener("click", function () { playRound("ROCK", computerPlay())});
+        paper.addEventListener("click", function () { playRound("PAPER", computerPlay())});
+        scissors.addEventListener("click", function () { playRound("SCISSORS", computerPlay())});
 
         function computerPlay() {
             let randomNum = Math.floor(Math.random() * 3);
@@ -44,66 +66,79 @@
 
         }
 
-        function playRound(playerSelection, computerSelection) {
-            let game = 1;
+        function getWinner(){
+            console.log("Get Winner Function");
 
-            let computerWins = 0;
-            let playerWins = 0;
-
-
-            if (playerSelection === "SCISSORS" && computerSelection === "ROCK") {
-                game++;
-                computerWins++;
-                results.textContent += "Computer wins -- " + computerSelection + " beats " + playerSelection;
+            if(playerWins > computerWins){
+                return "Player Wins!";
             }
-            if (playerSelection === "ROCK" && computerSelection === "PAPER") {
-                game++;
-                computerWins++;
-                results.textContent += "Computer wins -- " + computerSelection + " beats " + playerSelection;
-            }
-
-            if (playerSelection === "PAPER" && computerSelection === "SCISSORS") {
-                game++;
-                computerWins++;
-                results.textContent += "Computer wins -- " + computerSelection + " beats " + playerSelection;
-            }
-
-            if (playerSelection === "PAPER" && computerSelection === "ROCK") {
-                game++;
-                playerWins++;
-                results.textContent += "Player wins -- " + playerSelection + " beats " + computerSelection;
-            }
-
-            if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
-                game++;
-                playerWins++;
-                results.textContent += "Player wins -- " + playerSelection + " beats " + computerSelection;
-            }
-
-            if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
-                game++;
-                playerWins++;
-                results.textContent += "Player wins -- " + playerSelection + " beats " + computerSelection;
-            }
-
-            else {
-                game++;
-                results.textContent += "A tie ";
-            }
-
-            if (playerWins > computerWins) {
-                results.textContent += "Player wins " + playerWins + "-" + computerWins;
-            }
-            else if (playerWins < computerWins) {
-                results.textContent += "Computer wins " + computerWins + "-" + playerWins;
+            else if(computerWins > playerWins){
+                return "Computer Wins!";
             }
             else {
-                results.textContent += "A tie " + computerWins + "-" + playerWins;
+                return "Tied Game!";
             }
         }
 
+        function displayScore(text){
+            results.textContent = text;
+        }
+
+        function gameOver()
+        {
+            if (game === 6)
+            {
+                alert("GAME OVER!");
+
+                alert(getWinner());
+                
+                playerWins = 0;
+                computerWins = 0; 
+                game = 0;
+                
+                displayScore("Player -- " + playerWins + "  Computer -- " + computerWins);  
+            }
+        }
+
+        function playRound(playerSelection, computerSelection) {
+
+            console.log("GAME: " + game);
+
+            if ((playerSelection === "SCISSORS" && computerSelection === "ROCK") ||
+            (playerSelection === "ROCK" && computerSelection === "PAPER") ||
+            (playerSelection === "PAPER" && computerSelection === "SCISSORS"))
+            {
+                computerWins++;
+                console.log("Computer Score: " + computerWins);
+                game++;
+                displayScore();
+                gameOver();
+            }
+
+            else if ((playerSelection === "PAPER" && computerSelection === "ROCK") ||
+                (playerSelection === "ROCK" && computerSelection === "SCISSORS") ||
+                (playerSelection === "SCISSORS" && computerSelection === "PAPER"))
+            {
+                playerWins++;
+                game++;
+                console.log("Player Score: " + playerWins);
+                displayScore();
+                gameOver();
+            }
+
+            if(playerSelection === computerSelection)
+            {
+                game++; 
+                console.log("Tied Game");
+                displayScore();
+                gameOver(); 
+            }
+
+            
+        }
+
     </script>
-    
+
 </body>
 
 </html>
